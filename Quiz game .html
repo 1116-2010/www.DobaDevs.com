@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Quiz Game</title>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz Game</h1>
+        <div id="question-container"></div>
+        <div id="options-container"></div>
+      <button ><a href="/storage/emulated/0/dd.html">Quit</a></button>
+    </div><br>
+  
+
+    <script src="script.js"></script>
+<style>body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  background: linear-gradient(pink,white,powderblue);
+    
+}
+
+#quiz-container {
+    background: linear-gradient(pink,white,powderblue);
+    border:solid 2px white;
+    border-radius: 40px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+   
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background:linear-gradient(pink,white,powderblue);
+    color: black;
+    border: solid 2px white ;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: pink;
+    border:solid;
+    border-radius:75px;
+}
+
+
+
+</style>
+<script> 
+const quizData = [
+    {
+        question: "What is the capital of France?",
+        options: ["Miami", "Capetown", "Paris", "Beverly hills"],
+        correctAnswer: "Paris"
+    },
+    {
+        question: "In which year did the COVID-19 pandemic start?",
+        options: ["2023", "2006", "2019", "2023"],
+        correctAnswer: "2019"
+    },
+    {
+        question: "Who is the artist of the Mona Lisa?",
+        options: ["Leonardo da Vinci","MrBean","Galileo Galilei"],
+        correctAnswer:"Leonardo da Vinci"
+    },
+    { 
+        question:"What is Colgate?",
+        options:["Colgate","Aquafresh","Colgate is a brand of Aquafresh", "toothpaste"],
+        correctAnswer:"toothpaste"
+    },
+   
+       
+    // Additional 20 questions
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Saturn"],
+        correctAnswer: "Mars"
+    },
+    {
+        question: "Who wrote 'Hamlet'?",
+        options: ["William Shakespeare", "Charles Dickens", "J.K. Rowling", "Jane Austen"],
+        correctAnswer: "William Shakespeare"
+    },
+    {
+        question: "What is the tallest mountain in the world?",
+        options: ["K2", "Mount Everest", "Mount Kilimanjaro", "Mount Fuji"],
+        correctAnswer: "Mount Everest"
+    },
+    {
+        question: "Which element has the chemical symbol 'O'?",
+        options: ["Oxygen", "Gold", "Osmium", "Oganesson"],
+        correctAnswer: "Oxygen"
+    },
+    {
+        question: "In what year did World War II end?",
+        options: ["1945", "1918", "1939", "1965"],
+        correctAnswer: "1945"
+    },
+    {
+        question: "What is the largest ocean on Earth?",
+        options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"],
+        correctAnswer: "Pacific Ocean"
+    },
+    {
+        question: "Who discovered penicillin?",
+        options: ["Marie Curie", "Alexander Fleming", "Louis Pasteur", "Isaac Newton"],
+        correctAnswer: "Alexander Fleming"
+    },
+    {
+        question: "Which country is known as the Land of the Rising Sun?",
+        options: ["China", "Japan", "Thailand", "Vietnam"],
+        correctAnswer: "Japan"
+    },
+    {
+        question: "How many continents are there on Earth?",
+        options: ["5", "6", "7", "8"],
+        correctAnswer: "7"
+    },
+    {
+        question: "What is the smallest unit of life?",
+        options: ["Atom", "Cell", "Molecule", "Tissue"],
+        correctAnswer: "Cell"
+    },
+    {
+        question: "Which gas do plants primarily absorb during photosynthesis?",
+        options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+        correctAnswer: "Carbon Dioxide"
+    },
+    {
+        question: "Who painted the Sistine Chapel ceiling?",
+        options: ["Michelangelo", "Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
+        correctAnswer: "Michelangelo"
+    },
+    {
+        question: "Which organ in the human body is primarily responsible for pumping blood?",
+        options: ["Lungs", "Heart", "Liver", "Kidneys"],
+        correctAnswer: "Heart"
+    },
+    {
+        question: "In what year did man first land on the moon?",
+        options: ["1969", "1957", "1980", "1975"],
+        correctAnswer: "1969"
+    },
+    {
+        question: "Which famous scientist developed the theory of relativity?",
+        options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
+        correctAnswer: "Albert Einstein"
+    },
+    {
+        question: "What is the chemical formula for water?",
+        options: ["H2O", "CO2", "O2", "N2"],
+        correctAnswer: "H2O"
+    },
+    {
+        question: "Which animal is known as the King of the Jungle?",
+        options: ["Lion", "Tiger", "Elephant", "Giraffe"],
+        correctAnswer: "Lion"
+    },
+    {
+        question: "How many bones are in the human body?",
+        options: ["206", "195", "210", "250"],
+        correctAnswer: "206"
+    },
+    {
+        question: "Which country hosted the 2016 Summer Olympics?",
+        options: ["Brazil", "China", "Greece", "Japan"],
+        correctAnswer: "Brazil"
+    }
+];
+let currentQuestion = 0;
+let score = 0;
+
+const questionContainer = document.getElementById("question-container");
+const optionsContainer = document.getElementById("options-container");
+
+function startQuiz() {
+    showQuestion();
+}
+
+function showQuestion() {
+    const currentQuizData = quizData[currentQuestion];
+
+    questionContainer.innerHTML = currentQuizData.question;
+
+    optionsContainer.innerHTML = "";
+    currentQuizData.options.forEach(option => {
+        const button = document.createElement("button");
+        button.innerText = option;
+        button.addEventListener("click", () => checkAnswer(option));
+        optionsContainer.appendChild(button);
+    });
+}
+
+function checkAnswer(userAnswer) {
+    const correctAnswer = quizData[currentQuestion].correctAnswer;
+
+    if (userAnswer === correctAnswer) {
+        score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+        showQuestion();
+    } else {
+        endQuiz();
+    }
+}
+
+function endQuiz() {
+    questionContainer.innerHTML = `Your Score: ${score} out of ${quizData.length} ,Thanks for testing my game😁`;
+    optionsContainer.innerHTML = "";
+}
+
+function nextQuestion() {
+    if (currentQuestion < quizData.length) {
+        showQuestion();
+    } else {
+        endQuiz();
+    }
+}
+
+
+startQuiz();
+
+</script></body>
+</html>
